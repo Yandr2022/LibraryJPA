@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,4 +32,27 @@ public class PersonService {
                 : personRepository.findAll(PageRequest.of(page, perPage)).getContent();
     }
 
+    public Person findOne(int id) {
+        return personRepository.findById(id).orElse(null);
+    }
+
+    public Optional<Person> findOneByFullNameAndYearOfBirth(String fullName, int yearOfBirth) {
+        return personRepository.findByFullNameAndYearOfBirth(fullName, yearOfBirth);
+    }
+
+    @Transactional
+    public void save(Person person) {
+        personRepository.save(person);
+    }
+
+    @Transactional
+    public void update(int id, Person updatedPerson) {
+        updatedPerson.setId(id);
+        personRepository.save(updatedPerson);
+    }
+
+    @Transactional
+    public void delete(int id) {
+        personRepository.deleteById(id);
+    }
 }
