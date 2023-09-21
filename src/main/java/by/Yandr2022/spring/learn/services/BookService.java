@@ -70,4 +70,8 @@ public class BookService {
         bookRepository.findById(id).ifPresent(
                 book -> book.setReader(selectedReader));
     }
+
+    public List<Book> findByTitleStartsWith(String titleBegin){
+        return bookRepository.findByTitleStartsWith(titleBegin);
+    }
 }
