@@ -15,22 +15,29 @@
 </div>
 
 <div th:if="${!books.isEmpty()}">
-    <div th:each="book: ${books}">
-        <a th:href="@{/books/{id}(id=${book.getId()})}"
-           th:text="${book.getTitle()+ ', ' + book.getAuthor()}">book</a>
-        </br>
-    </div>
-        </hr>
-    </div>
+    <hr/>
+    <b>Books:</b>
+    <br/>
+    <table th:each="book : ${books}">
+        <tr>
+            <td>
+                <span th:text="${book.getTitle() + ', ' + book.getAuthor() + ', ' + book.getYear()}"
+                      th:style="${book.isExpired()} ? 'color: red' : 'color: black'">
+                    book
+                </span>
+            </td>
+        </tr>
+    </table>
+    <hr/>
+</div>
+<!--<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>-->
+<form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
+    <input type="submit" value="Update"/>
+</form>
 
-    <!--<a th:href="@{/people/{id}/edit(id=${person.getId()})}">Edit</a>-->
-    <form th:method="GET" th:action="@{/people/{id}/edit(id=${person.getId()})}">
-        <input type="submit" value="Update"/>
-    </form>
-
-    <form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
-        <input type="submit" value="Delete"/>
-    </form>
+<form th:method="DELETE" th:action="@{/people/{id}(id=${person.getId()})}">
+    <input type="submit" value="Delete"/>
+</form>
 
 </body>
 </html>
